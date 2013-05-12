@@ -4,3 +4,16 @@
 *.jar
 *.war
 *.ear
+/*.png
+/*.ppt
+/*.7z
+/*.rar
+/out
+/.gradle
+/*.iml
+/*.iws
+/*.ipr
+/*.gz
+/*.jpg
+/*.zip
+/*.pdf
