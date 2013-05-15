@@ -1,7 +1,6 @@
 package com.git.view;
 
 import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLDrawable;
 
 /**
  * Enter class description.

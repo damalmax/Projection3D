@@ -47,7 +47,7 @@ public class GLRenderer implements Renderer, KeyListener {
     int toggleMode = 0; /* projection mode */
     int th = 0;   /* azimuth of view angle */
     int ph = 0;   /* elevation of view angle */
-    int fov = 10; /* field of view for perspective */
+    int fov = 55; /* field of view for perspective */
     int asp = 1;  /* aspect ratio */
 
     private static final int PERSPECTIVE = 1;
@@ -96,13 +96,12 @@ public class GLRenderer implements Renderer, KeyListener {
             double Ey = +2 * dim * Math.sin(ph);
             double Ez = +2 * dim * Math.cos(th) * Math.cos(ph);
             /* camera/eye position, aim of camera lens, up-vector */
-            glu.gluPerspective(fov, asp, dim / 4, 4 * dim);
             glu.gluLookAt(Ex, Ey, Ez, 0, 0, 0, 0, Math.cos(ph), 0);
         }
          /*  Orthogonal - set world orientation */
         else {
-            gl.glRotatef(ph, 1, 0, 0);
-            gl.glRotatef(th, 0, 1, 0);
+            gl.glRotatef(ph, 1, 0, 0); // rotation around the x-axis
+            gl.glRotatef(th, 0, 1, 0); // rotation around the y-axis
         }
 
 
@@ -123,9 +122,8 @@ public class GLRenderer implements Renderer, KeyListener {
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL gl = drawable.getGL();
         GLU glu = new GLU();
-        gl.glViewport(0, 0, width, height);
-
         asp = (height > 0) ? width / height : 1;
+        gl.glViewport(0, 0, width, height);
         setProjection(gl, glu);
     }
 
@@ -276,21 +274,11 @@ public class GLRenderer implements Renderer, KeyListener {
 
         }
           /*  Change field of view angle */
-        if (key.getKeyCode() == KeyEvent.VK_MINUS) {
-            fov--;
-            System.out.println(fov);
-
-        }
-        if (key.getKeyCode() == KeyEvent.VK_PLUS) {
-            fov++;
-            System.out.println(fov);
-
-        }
         if (key.getKeyCode() == KeyEvent.VK_OPEN_BRACKET) {
-
+            fov--;
         }
         if (key.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET) {
-
+            fov++;
         }
           /*  Change dimensions */
         if (key.getKeyCode() == KeyEvent.VK_PAGE_UP) {
@@ -298,6 +286,14 @@ public class GLRenderer implements Renderer, KeyListener {
         }
         if (key.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
             dim -= 0.1;
+
+        }
+
+        if (key.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            th = 0;
+            ph = 0;
+            fov = 55;
+            asp = 1;
 
         }
 
@@ -332,11 +328,9 @@ public class GLRenderer implements Renderer, KeyListener {
         gl.glLoadIdentity();
         if (toggleMode == PERSPECTIVE) {
             /* perspective projection*/
-            System.out.println("project:: perspective");
             glu.gluPerspective(fov, asp, dim / 4, 4 * dim);
         } else {
             /* orthogonal projection*/
-            System.out.println("project:: orthogonal projection");
             gl.glOrtho(-dim * asp, +dim * asp, -dim, +dim, -dim, +dim);
         }
 

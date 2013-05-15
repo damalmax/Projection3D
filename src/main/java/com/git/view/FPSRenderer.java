@@ -4,7 +4,6 @@ import com.sun.opengl.util.j2d.TextRenderer;
 
 import java.awt.Font;
 import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
 
 /**
  * Enter class description.
